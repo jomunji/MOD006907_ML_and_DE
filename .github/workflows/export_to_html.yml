@@ -1,0 +1,25 @@
+name: Convert Jupyter Notebook to HTML
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  convert_notebook:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.x' # Replace with your desired Python version
+
+      - name: Install Jupyter
+        run: pip install nbconvert
+
+      - name: Convert notebook
+        run: jupyter nbconvert --to html "asignment data EDA.ipynb"
