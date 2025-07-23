@@ -1,0 +1,35 @@
+name: Convert Jupyter Notebook to HTML
+
+on:
+  push:
+    branches:
+      - main
+      
+permissions:
+    contents: write
+
+jobs:
+  convert_notebook:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.x' # Replace with your desired Python version
+
+      - name: Install Jupyter
+        run: pip install nbconvert
+
+      - name: Convert notebook
+        run: jupyter nbconvert --to html "asignment data EDA.ipynb"
+      
+      - name: Commit changes
+        run: |
+          git config --local user.email "actions@github.com"
+          git config --local user.name "GitHub Actions"
+          git commit -a -m "Automated HTML conversion [skip ci]"
+          git push
