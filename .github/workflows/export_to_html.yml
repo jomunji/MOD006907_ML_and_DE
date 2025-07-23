@@ -4,6 +4,9 @@ on:
   push:
     branches:
       - main
+      
+permissions:
+    contents: write
 
 jobs:
   convert_notebook:
@@ -23,11 +26,10 @@ jobs:
 
       - name: Convert notebook
         run: jupyter nbconvert --to html "asignment data EDA.ipynb"
-
+      
       - name: Commit changes
         run: |
-          git config --local user.email "actions@github.com"
-          git config --local user.name "GitHub Actions"
-          git add .
-          git commit -m "Automated HTML conversion"
+          git config --global user.name "${{ env.CI_COMMIT_AUTHOR }}"
+          git config --global user.email "username@users.noreply.github.com"
+          git commit -a -m "Automated HTML conversion [skip ci]"
           git push
