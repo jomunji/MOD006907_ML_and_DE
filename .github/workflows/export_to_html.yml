@@ -23,3 +23,11 @@ jobs:
 
       - name: Convert notebook
         run: jupyter nbconvert --to html "asignment data EDA.ipynb"
+
+      - name: Commit changes
+        run: |
+          git config --local user.email "actions@github.com"
+          git config --local user.name "GitHub Actions"
+          git add .
+          git commit -m "Automated HTML conversion"
+          git push
